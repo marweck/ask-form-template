@@ -1,4 +1,4 @@
-import { DateDayValidation, NumberRangeValidation, WholeNumberValidation } from 'ask-form-sdk';
+const { DateDayValidation, NumberRangeValidation, WholeNumberValidation } = require('ask-form-sdk');
 
 const yesNoOptions = {
     '0': ['No'],

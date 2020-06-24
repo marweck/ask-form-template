@@ -54,7 +54,7 @@ class ReviewHandler {
     }
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.NextIntent'
+            && handlerInput.requestEnvelope.request.intent.name === 'ReviewFormIntent'
             && this.formsHandler.isCurrent(handlerInput);
     }
     handle(handlerInput) {
@@ -180,8 +180,25 @@ const ErrorHandler = {
     }
 };
 
-// Create 
+const ApiUserHandler = {
+    async getUser(handlerInput) {
+        const deviceId = handlerInput.requestEnvelope.context.System.device.deviceId;
+        if (handlerInput.serviceClientFactory) {
+            const upsServiceClient = handlerInput.serviceClientFactory.getUpsServiceClient();
+            return {
+                username: await upsServiceClient.getProfileName(),
+                timeZone: await upsServiceClient.getSystemTimeZone(deviceId),
+            };
+        }
+    },
+    canHandle() {
+        return true;
+    }
+};
+
 const formsHandler = new FormListHandler(forms, ApiUserHandler);
+
+const apiClient = new Alexa.DefaultApiClient();
 
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
@@ -198,6 +215,7 @@ exports.handler = Alexa.SkillBuilders.custom()
         SessionEndedRequestHandler,
         IntentReflectorHandler, // make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers
     )
+    // .withApiClient(apiClient) // add client if your skill is configured for access
     .addErrorHandlers(
         ErrorHandler,
     )

@@ -117,6 +117,13 @@
                     "samples": [
                         "review form"
                     ]
+                },
+                {
+                    "name": "SaveFormIntent",
+                    "slots": [],
+                    "samples": [
+                        "save form"
+                    ]
                 }
             ],
             "types": [
