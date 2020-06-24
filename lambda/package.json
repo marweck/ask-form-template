@@ -11,7 +11,7 @@
   "dependencies": {
     "ask-sdk-core": "^2.6.0",
     "ask-sdk-model": "^1.18.0",
-    "ask-sdk-test": "git://github.com/brightsparc/ask-sdk-test.git",
+    "ask-form-sdk": "git://github.com/brightsparc/ask-form-sdk.git",
     "aws-sdk": "^2.326.0"
   }
 }

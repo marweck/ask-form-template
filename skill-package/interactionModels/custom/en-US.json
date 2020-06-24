@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "tonic playground",
+            "invocationName": "my survey",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
