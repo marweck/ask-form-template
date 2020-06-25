@@ -134,6 +134,10 @@ const CancelAndStopIntentHandler = {
                 || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
+        // Persist session on stop
+        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        handlerInput.attributesManager.setPersistentAttributes(sessionAttributes);
+
         const speakOutput = 'Goodbye!';
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -146,7 +150,10 @@ const SessionEndedRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'SessionEndedRequest';
     },
     handle(handlerInput) {
-        // Any cleanup logic goes here.
+        // Persist session on end
+        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        handlerInput.attributesManager.setPersistentAttributes(sessionAttributes);
+
         return handlerInput.responseBuilder.getResponse();
     }
 };
