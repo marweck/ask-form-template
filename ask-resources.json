@@ -14,9 +14,10 @@
         "userConfig": {
           "runtime": "nodejs10.x",
           "handler": "index.handler",
+          "templatePath": "./infrastructure/cfn-deployer/skill-stack.yaml",
           "awsRegion": "ap-southeast-2"
         },
-        "type": "@ask-cli/lambda-deployer"
+        "type": "@ask-cli/cfn-deployer"
       }
     }
   }

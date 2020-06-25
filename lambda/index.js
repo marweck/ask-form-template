@@ -2,10 +2,16 @@
 // Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
 // session persistence, api calls, and more.
 const Alexa = require('ask-sdk-core');
+const { DynamoDbPersistenceAdapter } = require('ask-sdk-dynamodb-persistence-adapter');
 const { DecimalIntentHandler, FormListHandler } = require('ask-form-sdk');
 
 // TODO: Customize the form as required
 const { forms } = require('./forms');
+
+// Optionally pull persistence table
+const {
+    DYNAMODB_TABLE_NAME,
+} = process.env
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -88,13 +94,15 @@ const SaveFormIntentHandler = {
 
         if (currentIntent.confirmationStatus == 'DENIED') {
             // TODO: Keep session open if you want user to edit form
-            const speakOutput = 'You dit not save the form.'
+            const speakOutput = 'Okay, Bye.'
             return handlerInput.responseBuilder
                 .speak(speakOutput)
                 .withShouldEndSession(true)
                 .getResponse();
         } else {
             // TODO: Add logic to save slotValues here
+            handlerInput.attributesManager.setPersistentAttributes(sessionAttributes);
+
             const count = slotValues && Object.keys(slotValues).length
             const speakOutput = completeForm ? `You completed the form` : `You updated ${count} fields in the form`;
             return handlerInput.responseBuilder
@@ -198,9 +206,7 @@ const ApiUserHandler = {
 
 const formsHandler = new FormListHandler(forms, ApiUserHandler);
 
-const apiClient = new Alexa.DefaultApiClient();
-
-exports.handler = Alexa.SkillBuilders.custom()
+const requestHandlers = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
         new DecimalIntentHandler(formsHandler),
@@ -214,9 +220,29 @@ exports.handler = Alexa.SkillBuilders.custom()
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
         IntentReflectorHandler, // make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers
-    )
-    // .withApiClient(apiClient) // add client if your skill is configured for access
-    .addErrorHandlers(
+    ).addErrorHandlers(
         ErrorHandler,
-    )
-    .lambda();
+    );
+
+// Add dynamo db persistence if required
+if (DYNAMODB_TABLE_NAME) {
+    const dynamoDbPersistenceAdapter = new DynamoDbPersistenceAdapter({
+        tableName: DYNAMODB_TABLE_NAME,
+        partitionKeyName: "id",
+        createTable: true,
+    })
+    const PersistenceSavingResponseInterceptor = {
+        async process(handlerInput) {
+            await handlerInput.attributesManager.savePersistentAttributes();
+        }
+    };
+    // Add persistence adapter and response interceptor
+    requestHandlers
+        .withPersistenceAdapter(dynamoDbPersistenceAdapter)
+        .addResponseInterceptors(PersistenceSavingResponseInterceptor);
+}
+
+// const apiClient = new Alexa.DefaultApiClient();
+// requestHandlers.withApiClient(apiClient) // add client if your skill is configured for access
+
+exports.handler = requestHandlers.lambda();
