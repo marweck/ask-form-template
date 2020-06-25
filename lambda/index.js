@@ -78,7 +78,7 @@ class AplHandler {
             && this.formsHandler.isCurrent(handlerInput);
     }
     handle(handlerInput) {
-        this.formsHandler.handleUserEvent(handlerInput);
+        return this.formsHandler.handleUserEvent(handlerInput);
     }
 };
 
