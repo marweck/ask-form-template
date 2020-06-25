@@ -17,7 +17,13 @@
       "distributionCountries": []
     },
     "apis": {
-      "custom": {}
+      "custom": {
+        "interfaces": [
+          {
+            "type": "ALEXA_PRESENTATION_APL"
+          }
+        ]
+      }
     },
     "manifestVersion": "1.0"
   }
