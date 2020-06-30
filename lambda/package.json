@@ -1,7 +1,7 @@
 {
-  "name": "my-survey",
+  "name": "ask-form-template",
   "version": "1.0.0",
-  "description": "my alexa survey",
+  "description": "Alexa Form SDK Template",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
