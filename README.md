@@ -68,3 +68,17 @@ The default invocation for is "my survey" so once your skill is deployed, you ca
 Following is an example conversation.
 
 ![ask-form-template](ask-form-template.png)
+
+### Troubleshooting
+
+- If you are getting the following error during ```ask deploy```, then you aldeary have the dynamo db table created with the name my-survey :
+```
+[Error]: The CloudFormation deploy failed for Alexa region "default": AlexaPersistentAttributesTable[AWS::DynamoDB::Table]  DELETE_COMPLETE(Resource deleted. For detailed reasoning, please check the "events" tab in the AWS console for CloudFormation stackId <STACK-ID>)
+```
+To resolve this issue you can fo to my-survey/infrastructure/cfn-deployer/skill-stack.yaml and change the name of the ```PersistentAttributeTableName``` default value from my-survey.
+- If you are getting the following CLI error during deployment, it might be due to the ask profile settings ;
+```
+[Error]: CliError: Skill package src is not found in ask-resources.json.
+```
+Go to my-syrvey/ask-resources.json and heck the profile to see if the profile used for deployment is present in this. If not add the profile use for deployment to this file.
+

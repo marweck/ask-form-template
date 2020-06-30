@@ -5,7 +5,6 @@ const Alexa = require('ask-sdk-core');
 const { DynamoDbPersistenceAdapter } = require('ask-sdk-dynamodb-persistence-adapter');
 const { DecimalIntentHandler, FormListHandler } = require('ask-form-sdk');
 
-// TODO: Customize the form as required
 const { forms } = require('./forms');
 
 // Optionally pull persistence table
@@ -36,6 +35,7 @@ class NextHandler {
             && this.formsHandler.isCurrent(handlerInput);
     }
     handle(handlerInput) {
+        // Calls the handleNext from ask-form-sdk
         return this.formsHandler.handleNext(handlerInput)
     }
 };
@@ -50,6 +50,7 @@ class PreviousHandler {
             && this.formsHandler.isCurrent(handlerInput);
     }
     handle(handlerInput) {
+        // Calls the handlePrevious from ask-form-sdk
         return this.formsHandler.handlePrevious(handlerInput)
     }
 };
@@ -64,6 +65,7 @@ class ReviewHandler {
             && this.formsHandler.isCurrent(handlerInput);
     }
     handle(handlerInput) {
+        // Calls the handleFormReview from ask-form-sdk
         return this.formsHandler.handleFormReview(handlerInput)
     }
 };
@@ -78,6 +80,7 @@ class AplHandler {
             && this.formsHandler.isCurrent(handlerInput);
     }
     handle(handlerInput) {
+        // Calls the handleUserEvent from ask-form-sdk
         return this.formsHandler.handleUserEvent(handlerInput);
     }
 };
@@ -93,14 +96,12 @@ const SaveFormIntentHandler = {
         let { completeForm, slotValues } = sessionAttributes;
 
         if (currentIntent.confirmationStatus == 'DENIED') {
-            // TODO: Keep session open if you want user to edit form
             const speakOutput = 'Okay, Bye.'
             return handlerInput.responseBuilder
                 .speak(speakOutput)
                 .withShouldEndSession(true)
                 .getResponse();
         } else {
-            // TODO: Add logic to save slotValues here
             handlerInput.attributesManager.setPersistentAttributes(sessionAttributes);
 
             const count = slotValues && Object.keys(slotValues).length
