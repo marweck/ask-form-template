@@ -9,7 +9,7 @@
   "author": "Amazon Alexa",
   "license": "ISC",
   "dependencies": {
-    "ask-form-sdk": "^1.0.0",
+    "ask-form-sdk": "git://github.com/brightsparc/ask-form-sdk.git",
     "ask-sdk-core": "^2.8.0",
     "ask-sdk-dynamodb-persistence-adapter": "^2.8.0",
     "ask-sdk-model": "^1.28.0",
