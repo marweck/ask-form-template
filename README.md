@@ -57,7 +57,9 @@ $ tree
     └── skill.json
 ```
 
-You will then be able to deploy this skill into your AWS account.
+You will then be able to deploy this skill into your AWS account.  By default this will be deployed to the `us-east-1` region.
+
+- Update the `.ask-resources.json` to specify a different region.
 
 ```shell
 $ ask deploy
