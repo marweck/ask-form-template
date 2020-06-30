@@ -26,7 +26,7 @@ const formSlots = [
         type: 'AMAZON.DATE',
         prompt: 'What day are you recording for?',
         reprompt: 'For what day?',
-        required: true, // NOTE: Don't allow skipping of these required fields.
+        required: true,
         validation: [new DateDayValidation(7, 7)],
     },
     {
@@ -48,7 +48,7 @@ const formSlots = [
         confirmation: (value) => `Are you sure you want to record ${value}?`,
         conditional: [{
             name: 'slot_one',
-            value: '1', // Requires the slot_one to be yes
+            value: '1',
         }],
         validation: [new NumberRangeValidation(3.1, 3.2)],
     },
@@ -66,14 +66,14 @@ const formSlots = [
     {
         index: 4,
         name: 'slot_three_units',
-        type: 'DECIMAL_UNITS', // Can we just use the same general UNITS type?
+        type: 'DECIMAL_UNITS',
         prompt: 'For what units?',
         reprompt: 'Is that in "Celsius" or "Fahrenheit"?',
         required: false,
         options: temperateUnits,
         conditional: [{
             name: 'slot_three',
-            empty: false, // Conditional if the slot_three is not empty
+            empty: false,
         }],
     },
     {
@@ -83,7 +83,7 @@ const formSlots = [
         prompt: 'Please add an element',
         reprompt: 'What element?',
         required: true,
-        confirmation: true, // Will prompt when only one match
+        confirmation: true,
         options: {
             'O': ['Oxygen'],
             'H': ['Hydrogen'],
