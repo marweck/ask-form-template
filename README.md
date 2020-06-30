@@ -65,7 +65,7 @@ You will then be able to deploy this skill into your AWS account.  By default th
 $ ask deploy
 ```
 
-The default invocation for is "my survey" so once your skill is deployed, you can [test your skill](https://developer.amazon.com/en-US/docs/alexa/devconsole/test-your-skill.html) in the Alexa developer console.
+The default invocation is "my survey". Once your skill is deployed, you can [test your skill](https://developer.amazon.com/en-US/docs/alexa/devconsole/test-your-skill.html) in the Alexa developer console.
 
 Following is an example conversation.
 
@@ -82,5 +82,5 @@ To resolve this issue you can fo to my-survey/infrastructure/cfn-deployer/skill-
 ```
 [Error]: CliError: Skill package src is not found in ask-resources.json.
 ```
-Go to my-survey/ask-resources.json and heck the profile to see if the profile used for deployment is present in this. If not add the profile use for deployment to this file.
+Go to my-survey/ask-resources.json and check the profile to see if the profile used for deployment is present in this. If not add the profile use for deployment to this file.
 
